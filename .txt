@@ -1,0 +1,51 @@
+ecommerce-backend/
+│
+├── src/
+│   ├── config/
+│   │   ├── db.js
+│   │   ├── mail.js
+│   │   └── crypto.js
+│
+│   ├── models/
+│   │   ├── Admin.js
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   ├── Cart.js
+│   │   ├── Order.js
+│   │   └── Watchlist.js
+│
+│   ├── services/
+│   │   ├── auth.service.js
+│   │   ├── product.service.js
+│   │   ├── order.service.js
+│   │   ├── cart.service.js
+│   │   └── user.service.js
+│
+│   ├── controllers/
+│   │   ├── admin/
+│   │   │   ├── auth.controller.js
+│   │   │   ├── product.controller.js
+│   │   │   ├── order.controller.js
+│   │   │   └── user.controller.js
+│   │   │
+│   │   └── website/
+│   │       ├── auth.controller.js
+│   │       ├── product.controller.js
+│   │       ├── cart.controller.js
+│   │       └── watchlist.controller.js
+│
+│   ├── routes/
+│   │   ├── admin.routes.js
+│   │   └── website.routes.js
+│
+│   ├── middlewares/
+│   │   ├── auth.middleware.js
+│   │   ├── admin.middleware.js
+│   │   ├── encrypt.middleware.js
+│   │   └── decrypt.middleware.js
+│
+│   ├── app.js
+│   └── server.js
+│
+├── .env
+└── package.json
