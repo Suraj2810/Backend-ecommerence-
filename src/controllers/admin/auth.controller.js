@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import Admin from '../../models/admin.js';
 
 export const login = async (req, res) => {
-  console.log('req',req)
   try {
     const { email, password } = req.body;
 
@@ -34,9 +33,10 @@ export const login = async (req, res) => {
     // 5. Send OTP email
     // await sendOtpMail(admin.email, otp);
 
-    // return res.json({
-    //   message: 'OTP sent to registered email'
-    // });
+    return res.json({
+      data:req.body,
+      message: 'OTP sent to registered email'
+    });
 
   } catch (err) {
     console.error(err);

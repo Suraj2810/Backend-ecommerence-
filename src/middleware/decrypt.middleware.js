@@ -1,10 +1,12 @@
 import { decrypt } from '../confiq/crypto.js';
 
 const decryptMiddleware = (req, res, next) => {
+
   try {
     // Only decrypt if encrypted payload exists
     if (req.body && typeof req.body.data === 'string') {
-      const encryptedData = req.body.data;
+      // const encryptedData = req.body.data;
+      const encryptedData = req.body.data.replace(/\s/g, "");
 
       // 🔍 Log BEFORE decrypt
       console.log('Encrypted payload:', encryptedData);
@@ -27,3 +29,4 @@ const decryptMiddleware = (req, res, next) => {
 };
 
 export default decryptMiddleware;
+
