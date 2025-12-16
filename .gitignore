@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+
+# Environment variables
+.env
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Build output
+dist/
+build/
+
+# Editor settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
