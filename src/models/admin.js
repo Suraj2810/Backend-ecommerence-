@@ -17,8 +17,8 @@ const adminSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ['ADMIN', 'SUPER_ADMIN'],
-      default: 'ADMIN'
+      enum: ['ADMIN', 'SUPER_ADMIN','User'],
+      default: 'User'
     },
 
     otp: {

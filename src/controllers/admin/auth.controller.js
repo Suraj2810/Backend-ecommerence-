@@ -1,11 +1,10 @@
 import bcrypt from 'bcryptjs';
 import Admin from '../../models/admin.js';
+import { sendOtpMail } from '../../confiq/mail.js';
 
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    console.log(email,password)
 
     // 1. Validate input
     if (!email || !password) {
@@ -31,7 +30,7 @@ export const login = async (req, res) => {
     await admin.save();
 
     // 5. Send OTP email
-    // await sendOtpMail(admin.email, otp);
+    await sendOtpMail(admin.email, otp);
 
     return res.json({
       data:req.body,
@@ -42,4 +41,27 @@ export const login = async (req, res) => {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
   }
+};
+
+
+
+export const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  const admin = await Admin.findOne({ email });
+
+  if (
+    !admin ||
+    admin.otp !== otp ||
+    admin.otpExpiry < new Date()
+  ) {
+    return res.status(401).json({ message: "Invalid or expired OTP" });
+  }
+
+  // Clear OTP
+  admin.otp = null;
+  admin.otpExpiry = null;
+  await admin.save();
+
+  res.json({ message: "OTP verified successfully" });
 };

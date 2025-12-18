@@ -4,9 +4,6 @@ import CryptoJS from "crypto-js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-// const SECRET_KEY = CryptoJS.enc.Utf8.parse(
-//   "12345678901234567890123456789012"
-// ); 
 const SECRET_KEY = CryptoJS.enc.Utf8.parse(
 process.env.AES_SECRET
 ); 

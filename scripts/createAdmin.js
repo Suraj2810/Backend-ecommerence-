@@ -1,4 +1,4 @@
-// create Admin 
+// create Admin Function 
 
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
@@ -11,7 +11,7 @@ const createAdmin = async () => {
   try {
     await mongoose.connect(process.env.DBURL);
 
-    const email = "admin@gmail.com";
+    const email = "surajpundir560@gmail.com";
     const plainPassword = "Abcd12345";
 
     // check if admin already exists
