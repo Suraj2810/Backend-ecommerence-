@@ -20,7 +20,7 @@ export const sendOtpMail = async (toEmail, otp) => {
       <h2>Admin Login OTP</h2>
       <p>Your OTP is:</p>
       <h1 style="color: #4CAF50">${otp}</h1>
-      <p>This OTP is valid for <b>5 minutes</b>.</p>
+      <p>This OTP is valid for <b>2 days</b>.</p>
       <br/>
       <p>If you did not request this, please ignore.</p>
     `,

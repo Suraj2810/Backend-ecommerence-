@@ -7,21 +7,21 @@ const encryptMiddleware = (req, res, next) => {
   console.log('originalJson',originalJson)
 
   res.json = (payload) => {
-    // ❌ do not encrypt errors
     if (res.statusCode >= 400) {
       return originalJson(payload);
     }
 
-    // ❌ avoid double encryption
     if (payload?.data && typeof payload.data === "string") {
       return originalJson(payload);
     }
 
-    const encrypted = encrypt(payload);
+    const encrypted = encrypt(payload.data);
     console.log('encrypted',encrypted)
 
     return originalJson({
       data: encrypted,
+      status:payload.status,
+      message:payload.message
     });
   };
 
