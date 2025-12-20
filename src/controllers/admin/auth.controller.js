@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import Admin from '../../models/admin.js';
 import {generateToken} from '../../services/auth.service.js'
-import { sendOtpMail } from '../../confiq/mail.js';
+import { sendOtpMail } from '../../config/mail.js';
 
 export const login = async (req, res) => {
   try {
