@@ -7,16 +7,36 @@ import { addProduct } from '../controllers/admin/product.controller.js';
 import{productList} from '../controllers/admin/product.controller.js';
 import{deleteProduct} from'../controllers/admin/product.controller.js'
 import {decryptMiddleware} from '../middleware/aes.middleware.js';
-import {encryptMiddleware} from '../middleware/aes.middleware.js'
+import {encryptMiddleware} from '../middleware/aes.middleware.js';
+import {updateProduct} from '../controllers/admin/product.controller.js';
+import{updateStatusProduct} from'../controllers/admin/product.controller.js'
+import { userDelete, userList, userStatus } from '../controllers/admin/user.controller.js';
+import { addCategory, deleteCategory, listCategory, statusCategory, subCategory, updateCategory } from '../controllers/admin/category.controller.js';
 
 
 const router = express.Router();
-router.use(encryptMiddleware);
+// router.use(encryptMiddleware);
 router.post('/login',decryptMiddleware, login);
 router.post('/verifyOtp',decryptMiddleware,verifyOtp);
+
+// Users API
+router.get('/userList',auth,userList);
+router.put('/userStatus/:id',auth,userStatus);
+router.delete('/userDelete/:id',auth,userDelete);
+
+// category API
+
+router.post('/category/addCategory',auth,addCategory);
+router.put('/category/updateCategory/:id',auth,updateCategory);
+router.get('/category/listCategory',auth,listCategory);
+router.delete('/category/deleteCategory/:id',auth,deleteCategory);
+router.put('/category/updateStatus/:id',auth,statusCategory);
+router.get('/category/subCategory/:id',auth,subCategory)
 
 router.post('/addProduct',auth,decryptMiddleware,addProduct);
 router.get('/productList',auth,productList);
 router.delete('/productDelete/:id', auth, decryptMiddleware, deleteProduct);
+router.put('/productUpdate/:id',auth,decryptMiddleware,updateProduct);
+router.put('/ProductUpdateStatus/:id',auth,decryptMiddleware,updateStatusProduct)
 
 export default router;

@@ -31,9 +31,18 @@ const adminSchema = new mongoose.Schema(
       default: null
     },
 
-    isActive: {
-      type: Boolean,
-      default: true
+    status: {
+      type: String,
+      enum:["A","D"],
+      default: "A"
+    },
+    deletedAt:{
+      type:Date,
+      default:null
+    },
+    isDeleted:{
+      type:Boolean,
+      default:false
     }
   },
   {

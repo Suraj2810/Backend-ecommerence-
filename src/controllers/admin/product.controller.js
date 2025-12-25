@@ -37,7 +37,7 @@ export const addProduct =async(req,res)=>{
 // GET: Product List
 export const productList = async(req,res)=>{
     try{
-        const list = await Product.find({status:'A'});
+        const list = await Product.find();
         return res.status(200).json({
             message:'list Successfully',
             data:list,
@@ -54,13 +54,87 @@ export const productList = async(req,res)=>{
 }
 
 // PUT: Update Product
-export const updateProduct = async (req, res) => {
-  const { id } = req.params; // Decrypted from URL
-  const updateData = req.body; // Decrypted from Body
+
+export const updateProduct = async(req,res)=>{
+  try{
+  const {id} = req.params;
+  const updatedData = req.body;
+
+  const updated = await Product.findByIdAndUpdate(id,updatedData,{new:true});
+  if(!updated){
+    return res.status(403).json({
+      message :"InValid Id ",
+      status:403,
+    })
+  }
+  return res.status(200).json({
+    message:'Updated Successfully',
+    status:200,
+
+  })
+  }
+  catch(err){
+    return res.status(500).json({
+      message:'Server Error',
+      error:err.message,
+      status:500
+    })
+  }
   
-  const updated = await Product.findByIdAndUpdate(id, updateData, { new: true });
-  res.status(200).json(updated);
+
+}
+
+
+export const updateStatusProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1️⃣ Find product by ID
+    // const product = await Product.findById(id);
+
+    const product = await Product.findByIdAndUpdate(id,[{$set:{status:{$cond:[{$eq:["$status","A"]} ,"D","A"]}}}],
+     {new:true,updatePipeline:true}
+    );
+
+//     const product = await Product.findByIdAndUpdate(
+//   id,
+//   [{ $set: { status: { $cond: [{ $eq: ["$status", "A"] }, "D", "A"] } } }],
+//   { new: true }
+// );
+
+
+    // 2️⃣ If product not found
+    if (!product) {
+      return res.status(400).json({
+        message: 'Invalid ProductId',
+        status: 400
+      });
+    }
+
+    // // 3️⃣ Toggle status
+    // product.status = product.status === 'A' ? 'D' : 'A';
+
+    // // 4️⃣ Save updated product
+    // await product.save();
+
+    return res.status(200).json({
+      message: 'Status Updated Successfully',
+      status: 200,
+      data: {
+        status: product.status,
+        name: product.name
+      }
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: 'Server Error',
+      status: 500,
+      error: err.message
+    });
+  }
 };
+
 
 // DELETE: Delete Product
 
