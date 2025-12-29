@@ -12,6 +12,19 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    stock:{
+        type:Number,
+    },
+    discount:{
+        type:Number
+    },
+    image:
+        [String]
+    ,
+    categoryId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'category',
+    },
     status:{
       type:String,
       enum:['A','D'],

@@ -1,38 +1,57 @@
 import Product from "../../models/Product.js";
+import Category from "../../models/category.js";
 import mongoose from "mongoose";
 
-// POST: Add Product
-export const addProduct =async(req,res)=>{
-    try{
-        const {name , description,price}=req.body;
-        if(!name && !price){
-            return res.status(400).json({message:'Product Name and Price is required',status:400});
-        }
-         if(!name){
-            return res.status(400).json({message:'Product Name is required',status:400});
-        }
-         if(!price){
-            return res.status(400).json({message:'Price is required',status:400});
-        }
+export const addProduct = async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      price,
+      discount,
+      stock,
+      categoryId
+    } = req.body;
 
-       const product = await Product.create({
-        name,
-        description,
-        price,
-        createdBy:req.user.id
-       });
-       return res.status(201).json({
-        message:'Product created Successfully',
-        status:201,
-        content:product
-       });
+    // 🔹 Validate category
+    const categoryExists = await Category.findOne({
+      _id: categoryId,
+      status: "A",
+    });
 
+    if (!categoryExists) {
+      return res.status(400).json({
+        message: "Invalid or inactive category"
+      });
     }
-    catch(err){
-        console.error('Add product error:', err);
-        return res.status(500).json({message:'Server Error',status:500,error:err})
-    };
-}
+
+    // 🔹 Get image paths
+    const images = req.files?.map(file => file.path) || [];
+
+    const product = await Product.create({
+      name,
+      description,
+      price,
+      discount,
+      stock,
+      images,
+      categoryId,
+      createdBy: req.user.id   // logged-in admin
+    });
+
+    res.status(201).json({
+      message: "Product added successfully",
+      data: product
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Server Error",
+      error: err.message
+    });
+  }
+};
+
 
 // GET: Product List
 export const productList = async(req,res)=>{
